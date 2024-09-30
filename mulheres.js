@@ -20,6 +20,7 @@ async function mostraMulheres (resquest, response) {
     response.json(mulheresVindasDoBancoDeDados)
   }catch (erro) {
     console.log(erro)
+
   }
 };
 
@@ -31,7 +32,9 @@ async function criaMulher(request, response) {
     minibio: request.body.minibio,
     citacao: request.body.citacao
   })
-
+  if (!novaMulher.nome || !novaMulher.minibio) {
+    return response.status(400).json({ error: 'Nome e minibio são obrigatórios.' })
+  }
   try {
     const mulherCriada = await novaMulher.save()
     response.status(201).json(mulherCriada)
